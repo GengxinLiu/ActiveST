@@ -1,38 +1,12 @@
 BASE:
+  exp_id: 1
   seed: 28
   gpu: "0"
-  save_epochs: [ 327, 328, 330, 331, 332, 333 ]
+  save_epochs: [270, 290, 305, 320, 330, 345, 350]
 
 ACTIVE:
-  strategie_num_list: [ 5, 5, 5 ]
-  strategie: uncertainty  # selection strategies [uncertainty, random]
-  power: 1
-
-PSEUDOLLABEL: # set self-training parameters
-  t_uncertainty: 0.008
-  t_confidence: 0.99
-  strategie: multi_view
-  pass_time: 5 # random pass times to compute uncertainty
-
-PSEUDOAUGMENTATION: # data augmentation when generate pseudo-labels
-  augment_data: True
-  # coords
-  elastic_distortion: False
-  ELASTIC_DISTORT_PARAMS: [ [ 0.2, 0.4 ], [ 0.8, 1.6 ] ]
-  random_scale: True
-  SCALE_AUGMENTATION_BOUND: [ 0.9, 1.1 ]
-  random_rotation: True
-  ROTATION_AUGMENTATION_BOUND: [ [ -0.0490625, 0.0490625 ], [ -0.0490625, 0.0490625 ], [ -3.14, 3.14 ] ]
-  random_flip: True
-  ROTATION_AXIS: z
-  random_dropout: True
-  dropout_ratio: 0.2
-  # color
-  chromaticautocontrast: True
-  chromatictranslation: True
-  data_aug_color_trans_ratio: 0.1
-  chromaticjitter: True
-  data_aug_color_jitter_std: 0.05
+  strategie: random  # selection strategies
+  k: 5
 
 TRAINING:
   pretrain:
@@ -42,26 +16,16 @@ TRAINING:
   optimizer: SGD  # choice [SGD, Adam]
   lr: 1e-1
   weight_decay: 1e-4
-
   adam_beta1: 0.9    # for adam optimizer
   adam_beta2: 0.999  # for adam optimizer
-
   momentum: 0.9  # for sgd optimizer
   dampening: 0.1 # for sgd optimizer
-
   lr_schedule: PolyLR  # choice [StepLR, PolyLR, SquaredLR]
-
   step_size: 2e4 # steplr
   step_gamma: 0.1 # steplr
-
   max_iter: 100000  # polylr
   poly_power: 0.9 # polylr
-
   eval_epochs: 5  # evaluate model frequency
-  w_gt: [ 1, 1, 1, 1, 1 ]
-  w_kd: [ 0.5, 0.5, 0.5, 0.5, 0.5 ]
-  loss_kd: ce
-  T: 1
 
 DATA:
   data_root: PATH_TO_SCANNET_DATA
@@ -71,6 +35,7 @@ DATA:
   voxel_size: 0.02
   ignore_label: -100
   num_workers: 20
+
 
 AUGMENTATION:
   # coords
