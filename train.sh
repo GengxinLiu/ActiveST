@@ -1,4 +1,4 @@
-export exp_id=1
+exp_id=1
 python train_stal.py --exp_id ${exp_id}  --iteration 1
 wait
 python train_stal.py --exp_id ${exp_id}  --iteration 2
